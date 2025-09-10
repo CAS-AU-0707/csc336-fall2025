@@ -153,26 +153,45 @@ td p {
     scrollbar-color: var(--border) var(--surface-2);
 }
 
-
-
-
-
 .controvery {
     text-align: center;
     color: var(--fg);
 }
 
-.controvery img {
-    display: block;
-    margin: 0 auto;
-    max-width: 800px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+.controvery table {
+    margin: 0 auto;           /* center the table itself */
+    border-spacing: 20px;     /* space between cells */
 }
 
-.controvery p {
+.controvery td {
+    background: #1a1a1a;      /* shaded background */
+    color: #f5f5f5;
+    text-align: center;       /* centers text in the box */
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    width: 600px;             /* consistent width */
+    vertical-align: top;      /* text aligns to top */
 }
+
+.controvery img {
+    display: block;
+    margin: 0 auto 1rem auto; /* center image with margin below */
+    max-width: 100%;          /* keep inside cell */
+    height: auto;
+    border-radius: 10px;
+}
+
+.controvery a {
+    color: var(--primary-400);
+    text-decoration: none;
+}
+
+.controvery a:hover {
+    color: var(--accent-600);
+}
+
+
 
 .score {
     text-align: center;
@@ -187,6 +206,7 @@ td p {
     border-radius: 10px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
+
 .site-footer {
     background: var(--surface);
     border-top: 2px solid var(--border);
@@ -196,3 +216,5 @@ td p {
     color: var(--muted);
     font-size: 0.9rem;
 }
+
+
