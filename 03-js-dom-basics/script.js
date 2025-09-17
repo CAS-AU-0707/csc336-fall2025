@@ -1,0 +1,16 @@
+const $=(sel,root=document)=>root.querySelector(sel);
+const $$=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
+const themeBtn=$('#themeToggle');
+const setTheme=()=>{const light=document.body.classList.toggle('light');themeBtn.setAttribute('aria-pressed',String(light));themeBtn.textContent=light?'☀️ Theme':'🌙 Theme'};
+if(themeBtn)themeBtn.addEventListener('click',setTheme);
+const tipsWrap=$('#tips');const addTipBtn=$('#addTipBtn');const starterTips=[['Serve basics','Keep the paddle below your wrist and contact below the waist.'],['Kitchen reminder','You can enter the NVZ anytime, just don\'t volley while in it.'],['Feet first','On the serve, keep at least one foot behind the baseline until after contact.']];let tipIndex=0;
+const addTip=()=>{const tip=document.createElement('article');tip.className='tip';const [title,body]=starterTips[tipIndex%starterTips.length];tip.innerHTML=`<strong>${title}:</strong> ${body}`;tipsWrap.appendChild(tip);tipIndex++};
+addTipBtn?.addEventListener('click',addTip);
+$('#highlightRulesBtn')?.addEventListener('click',()=>{const keyWords=['Serve','Double bounce','Kitchen','Scoring','Faults'];const items=$$('.rules-list li');items.forEach(li=>{keyWords.forEach(word=>{li.innerHTML=li.innerHTML.replace(new RegExp(`(^|>)(${word})(:?)`,'i'),m=>m.replace(word,`<mark>${word}</mark>`))})})});
+$('#checkServeBtn')?.addEventListener('click',()=>{const height=Number($('#heightInput').value||0);const feetBehind=$('#feetSelect').value==='yes';const result=$('#serveResult');let legal=true;let reasons=[];if(height>34){legal=false;reasons.push('Contact too high (must be below ~waist).')}if(!feetBehind){legal=false;reasons.push('Feet must be behind the baseline on serve.')}result.textContent=legal?'✅ Likely a legal serve.':`❌ Not legal: ${reasons.join(' ')}`;result.style.color=legal?'var(--ok)':'var(--bad)'});
+const rallyList=$('#rallyList');
+$$('.rally-controls .btn').forEach(btn=>{btn.addEventListener('click',()=>{const side=btn.dataset.side;if(!side)return;const li=document.createElement('li');li.textContent=`Point to Team ${side}`;rallyList.appendChild(li)})});
+$('#resetRally')?.addEventListener('click',()=>{rallyList.innerHTML=''});
+const answers={q1:'b',q2:'b',q3:'c',q4:'b',q5:'c'};
+$('#gradeBtn')?.addEventListener('click',()=>{let correct=0;Object.keys(answers).forEach(q=>{const chosen=$(`input[name="${q}"]:checked`);const fieldset=chosen?chosen.closest('fieldset'):$(`input[name="${q}"]`).closest('fieldset');fieldset?.classList.remove('correct','incorrect');if(chosen&&chosen.value===answers[q]){correct++;fieldset?.classList.add('correct')}else{fieldset?.classList.add('incorrect')}});const pct=Math.round((correct/5)*100);const score=$('#score');score.textContent=`Score: ${correct}/5 (${pct}%)`;score.style.color=pct>=80?'var(--ok)':'var(--bad)'});
+$('#clearBtn')?.addEventListener('click',()=>{$('#score').textContent='';$$('.correct, .incorrect').forEach(el=>el.classList.remove('correct','incorrect'))});

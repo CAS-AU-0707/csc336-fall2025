@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pickleball 101 — Rules, Court & Quiz</title>
+  <meta name="description" content="Beginner-friendly pickleball rules with an interactive quiz and mini tools. Vanilla HTML/CSS/JS." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <h1>Pickleball 101</h1>
+      <nav class="nav">
+        <a href="#rules">Rules</a>
+        <a href="#court">Court</a>
+        <a href="#tools">Tools</a>
+        <a href="#quiz">Quiz</a>
+      </nav>
+      <button class="btn" id="themeToggle" aria-pressed="false">🌙 Theme</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h2>Learn the essentials, then test yourself</h2>
+      <p>Simple explanations of serving, the double-bounce rule, non-volley zone ("kitchen"), scoring, and faults.</p>
+      <button class="btn primary" id="addTipBtn">+ Add a quick tip</button>
+      <div id="tips" class="tips" aria-live="polite"></div>
+    </section>
+
+    <section id="rules" class="card">
+      <h3>Core Rules (beginner version)</h3>
+      <ul class="rules-list">
+        <li><strong>Serve:</strong> Underhand, below the waist, diagonally cross-court, behind the baseline.</li>
+        <li><strong>Double bounce:</strong> Each side must let the ball bounce once after the serve before volleys.</li>
+        <li><strong>Kitchen:</strong> No volleys while standing in the non-volley zone.</li>
+        <li><strong>Scoring:</strong> Only the serving side scores. Games commonly go to 11 (win by 2).</li>
+        <li><strong>Faults:</strong> Hitting out, into the net, volleying in the kitchen, or missing the serve box.</li>
+      </ul>
+      <button class="btn subtle" id="highlightRulesBtn">Highlight key terms</button>
+    </section>
+
+    <section id="court" class="card">
+      <h3>Court at a glance</h3>
+      <div class="court" role="img" aria-label="Diagram of a pickleball court with baselines, service boxes, and non-volley zone">
+        <div class="nvz" title="Non‑Volley Zone"></div>
+        <div class="left-service" title="Left Service Box"></div>
+        <div class="right-service" title="Right Service Box"></div>
+        <div class="centerline" aria-hidden="true"></div>
+        <div class="net" aria-hidden="true">NET</div>
+      </div>
+      <p class="muted">Tip: The non‑volley zone extends 7 ft from the net on both sides.</p>
+    </section>
+
+    <section id="tools" class="card grid2">
+      <div>
+        <h3>Serve legality checker</h3>
+        <label>Contact height (inches from ground): <input id="heightInput" type="number" min="0" value="30"></label>
+        <label>Feet behind baseline? 
+          <select id="feetSelect">
+            <option value="yes" selected>Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+        <button class="btn" id="checkServeBtn">Check serve</button>
+        <p id="serveResult" class="result" aria-live="polite"></p>
+      </div>
+      <div>
+        <h3>Build a rally (DOM createElement)</h3>
+        <div class="rally-controls">
+          <button class="btn" data-side="A">+ Point to Team A</button>
+          <button class="btn" data-side="B">+ Point to Team B</button>
+          <button class="btn subtle" id="resetRally">Reset</button>
+        </div>
+        <ol id="rallyList" class="rally" aria-live="polite"></ol>
+      </div>
+    </section>
+
+    <section id="quiz" class="card">
+      <h3>Mini‑quiz (5 questions)</h3>
+      <form id="quizForm">
+        <fieldset>
+          <legend>1) The serve must be…</legend>
+          <label><input type="radio" name="q1" value="a"> Overhand and powerful</label>
+          <label><input type="radio" name="q1" value="b"> Underhand below the waist ✅</label>
+          <label><input type="radio" name="q1" value="c"> Either, player’s choice</label>
+        </fieldset>
+        <fieldset>
+          <legend>2) Double‑bounce rule means…</legend>
+          <label><input type="radio" name="q2" value="a"> Ball must bounce twice each side</label>
+          <label><input type="radio" name="q2" value="b"> Two bounces total, then volleys ✅</label>
+          <label><input type="radio" name="q2" value="c"> No bouncing allowed</label>
+        </fieldset>
+        <fieldset>
+          <legend>3) Volleys in the kitchen are…</legend>
+          <label><input type="radio" name="q3" value="a"> Always legal</label>
+          <label><input type="radio" name="q3" value="b"> Legal only after 5 points</label>
+          <label><input type="radio" name="q3" value="c"> Faults if your feet are in the NVZ ✅</label>
+        </fieldset>
+        <fieldset>
+          <legend>4) Who can score?</legend>
+          <label><input type="radio" name="q4" value="a"> Either side</label>
+          <label><input type="radio" name="q4" value="b"> Only the serving side ✅</label>
+          <label><input type="radio" name="q4" value="c"> Only the receiving side</label>
+        </fieldset>
+        <fieldset>
+          <legend>5) Typical game goes to…</legend>
+          <label><input type="radio" name="q5" value="a"> 7</label>
+          <label><input type="radio" name="q5" value="b"> 9</label>
+          <label><input type="radio" name="q5" value="c"> 11, win by 2 ✅</label>
+        </fieldset>
+        <div class="quiz-actions">
+          <button type="button" class="btn primary" id="gradeBtn">Grade my quiz</button>
+          <button type="reset" class="btn subtle" id="clearBtn">Clear</button>
+        </div>
+      </form>
+      <p id="score" class="score" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <small>Built with vanilla HTML/CSS/JS • For CSC 336 — JS & DOM Basics</small>
+      <a href="#top" class="to-top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
