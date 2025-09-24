@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IRL Quest Log</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="title-wrap">
+        <h1>IRL Quest Log</h1>
+        <p class="subtitle">Daily • Weekly • Monthly • Main</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="column lists-col">
+        <section class="board rough">
+          <h2 class="board-title">Boards</h2>
+          <div class="boards-grid">
+            <div class="board-block">
+              <h3>Daily</h3>
+              <ul id="daily-list" class="quest-list"></ul>
+            </div>
+            <div class="board-block">
+              <h3>Weekly</h3>
+              <ul id="weekly-list" class="quest-list"></ul>
+            </div>
+            <div class="board-block">
+              <h3>Monthly</h3>
+              <ul id="monthly-list" class="quest-list"></ul>
+            </div>
+            <div class="board-block">
+              <h3>Main</h3>
+              <ul id="main-list" class="quest-list"></ul>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="column form-col">
+        <div class="panel rough">
+          <h2>Add a Quest</h2>
+          <form id="quest-form" novalidate>
+            <div class="field">
+              <label for="title">Title</label>
+              <input id="title" name="title" type="text" />
+            </div>
+
+            <div class="field">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" rows="4"></textarea>
+            </div>
+
+            <div class="field two-col">
+              <div>
+                <label for="section">Section</label>
+                <select id="section" name="section" required>
+                  <option value="">Choose…</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="main">Main</option>
+                </select>
+              </div>
+              <div class="repeat-wrap">
+                <label for="repeats">Repeats</label>
+                <input id="repeats" name="repeats" type="checkbox" />
+              </div>
+            </div>
+
+            <div class="field two-col">
+              <div>
+                <label for="labelColor">Label color</label>
+                <input id="labelColor" name="labelColor" type="color" value="#4caf50" />
+              </div>
+            </div>
+
+            <div id="errors" class="errors" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn-rough">Add Quest</button>
+          </form>
+        </div>
+
+        <div class="panel notes rough">
+          <h3>Notes</h3>
+          <p>Click a quest to mark it complete. Click again to undo.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
