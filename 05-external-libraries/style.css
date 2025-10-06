@@ -13,6 +13,12 @@ header {
     text-align: center;
 }
 
+header p {
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+}
+
 main {
     padding: 20px;
 }
