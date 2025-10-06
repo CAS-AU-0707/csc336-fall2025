@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mr. Potato's</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>Mr. Potato's</h1>
+        <p>The ultimate spot for crispy, creamy, and crunchy potato goodness!</p>
+    </header>
+
+    <main>
+        <section id="menu">
+            <h2>Our Top Dishes</h2>
+            <div class="dish">
+                <img src="fries.png" alt="French Fries" />
+                <h3>French Fries</h3>
+                <p>Golden, crispy, and salted to perfection.</p>
+            </div>
+            <div class="dish">
+                <img src="mashed.jpg" alt="Mashed Potatoes" />
+                <h3>Mashed Potatoes</h3>
+                <p>Fluffy, buttery, and topped with rich gravy.</p>
+            </div>
+            <div class="dish">
+                <img src="tots.jpg" alt="Tater Tots" />
+                <h3>Tater Tots</h3>
+                <p>Crunchy outside, soft inside — classic potato poppers.</p>
+            </div>
+        </section>
+
+        <section id="chart-section">
+            <h2>Popularity Chart</h2>
+            <canvas id="popularityChart" width="400" height="200"></canvas>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
