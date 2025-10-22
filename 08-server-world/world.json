@@ -1,0 +1,75 @@
+{
+    "regions": [
+        {
+            "name": "Candyland",
+            "climate": "65°F",
+            "towns": [
+                {
+                    "name": "Gumdrop Grove",
+                    "population": 1500,
+                    "notable_people": [
+                        {
+                            "name": "Lolly Bright",
+                            "role": "lollipop smith",
+                            "items": [
+                                "peppermint cane",
+                                {
+                                    "name": "candy crown",
+                                    "rarity": "rare"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Fudge Ripple",
+                            "role": "chocolatier",
+                            "items": [
+                                "whisk",
+                                "recipe cards"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Overworld",
+            "climate": "110°F",
+            "towns": [
+                {
+                    "name": "Village Square",
+                    "population": 70,
+                    "notable_people": [
+                        {
+                            "name": "Steve",
+                            "role": "builder",
+                            "items": [
+                                "iron pickaxe",
+                                {
+                                    "name": "enchanted book",
+                                    "rarity": "uncommon"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Redstone Junction",
+                    "population": 2,
+                    "notable_people": [
+                        {
+                            "name": "Dream",
+                            "role": "redstone engineer",
+                            "items": [
+                                "redstone dust",
+                                {
+                                    "name": "observer module",
+                                    "rarity": "rare"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
