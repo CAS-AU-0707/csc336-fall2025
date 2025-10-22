@@ -1,56 +1,59 @@
-function itemsToText(items = []) {
-worldDiv.replaceChildren(container);
-document.getElementById("storyBox").textContent = tellTheStory(world);
+async function getJSON(url) {
+    const r = await fetch(url);
+    return r.json();
 }
-
-
 async function postJSON(url, body) {
-const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-if (!res.ok) throw new Error(`${url} failed: ${res.status}`);
-return res.json();
+    const r = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+    });
+    return r.json();
+}
+function formToObj(form) {
+    const d = new FormData(form);
+    const o = {};
+    for (const [k, v] of d.entries()) o[k] = (v || "").toString().trim();
+    return o;
 }
 
-
-function getFormDataObj(form) {
-const data = new FormData(form);
-const obj = {};
-for (const [k, v] of data.entries()) {
-obj[k] = isNaN(v) ? v : Number(v);
+async function loadWorld() {
+    const data = await getJSON("/world");
+    const lines = [];
+    (data.regions || []).forEach((r, ri) => {
+        lines.push(`[${ri}] ${r.name} (${r.climate})`);
+        (r.towns || []).forEach((t, ti) => {
+            lines.push(`  [${ri}.${ti}] ${t.name}`);
+            (t.notable_people || []).forEach((p, pi) => {
+                lines.push(`    [${ri}.${ti}.${pi}] ${p.name} — ${p.role}`);
+            });
+        });
+    });
+    document.getElementById("worldDiv").textContent = lines.join("\n") || "(empty)";
 }
-return obj;
-}
 
-
-// Wire up form actions
-const form = document.getElementById("updateForm");
-form.addEventListener("submit", async (e) => {
-e.preventDefault();
-const body = getFormDataObj(form);
-try {
-await postJSON("/update", body);
-await loadWorld();
-form.reset();
-} catch (err) {
-alert("Update failed: " + err.message);
-}
-});
-
-
-// Excite button (append !!!)
-document.getElementById("exciteBtn").addEventListener("click", async () => {
-const body = getFormDataObj(form);
-try {
-await postJSON("/excite", body);
-await loadWorld();
-} catch (err) {
-alert("Excite failed: " + err.message);
-}
-});
-
-
-// Manual refresh
 document.getElementById("refreshBtn").addEventListener("click", loadWorld);
 
+const findForm = document.getElementById("findForm");
+findForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const res = await postJSON("/find", body);
+    const lines = (res.results || []).map(x => `${x.path}`);
+    document.getElementById("resultsBox").textContent = lines.length ? lines.join("\n") : "(no matches)";
+});
 
-// Initial load
+const replaceForm = document.getElementById("replaceForm");
+replaceForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = formToObj(replaceForm);
+    const res = await postJSON("/replace", body);
+    if (res.changed) {
+        document.getElementById("resultsBox").textContent =
+            `Changed first match at ${res.changed.town} -> ${res.changed.region}`;
+    } else {
+        document.getElementById("resultsBox").textContent = "(no change)";
+    }
+    await loadWorld();
+});
+
 loadWorld();

@@ -1,61 +1,36 @@
 <!doctype html>
-.pill { display:inline-block; padding:.15rem .5rem; border-radius:999px; background:#0e1a38; border:1px solid #2a355a; font-size:.8rem; margin-left:.5rem; }
-.grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:.5rem; }
-.tiny { font-size:.85rem; color:#b9c3e4; }
-</style>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
-<header>
-<h1>Interactive World</h1>
-<div class="muted">World loaded from <code>world.json</code>. Explore regions → towns → people, then update names live.</div>
-</header>
+    <section>
+        <h2>World</h2>
+        <pre id="worldDiv">Loading…</pre>
+        <button id="refreshBtn">Refresh</button>
+    </section>
 
+    <section>
+        <h2>Find Person / Replace Person</h2>
+        <form id="findForm">
+            <input name="find" type="text" placeholder="Find name" />
+            <button type="submit">Find</button>
+        </form>
 
-<main>
-<section class="card">
-<h2>World Browser</h2>
-<div class="content">
-<div id="worldDiv">Loading…</div>
-</div>
-</section>
+        <form id="replaceForm">
+            <input name="find" type="text" placeholder="Find name" />
+            <input name="replace" type="text" placeholder="Replace with..." />
+            <button type="submit">Replace First</button>
+        </form>
 
+        <h3>Results</h3>
+        <pre id="resultsBox"></pre>
+    </section>
 
-<aside class="card">
-<h2>Update a Person</h2>
-<div class="content">
-<form id="updateForm">
-<div class="row">
-<div>
-<label>Region Index</label>
-<input type="number" name="regionIndex" min="0" value="0" required />
-</div>
-<div>
-<label>Town Index</label>
-<input type="number" name="townIndex" min="0" value="0" required />
-</div>
-<div>
-<label>Person Index</label>
-<input type="number" name="personIndex" min="0" value="0" required />
-</div>
-</div>
-<label>New Name</label>
-<input type="text" name="newName" placeholder="e.g., Ada Lovelace" required />
-<div class="row">
-<button type="submit">Update Name</button>
-<button type="button" id="exciteBtn" title="Append !!! to the name">Excite!!!</button>
-</div>
-</form>
-
-
-<h3 style="margin-top:1rem">Story Preview</h3>
-<div class="story" id="storyBox">(Story will appear here)</div>
-<button id="refreshBtn" style="margin-top:.5rem">Refresh from /world</button>
-<div class="tiny" style="margin-top:.5rem">Tip: use the indices shown in the browser list.</div>
-</div>
-</aside>
-</main>
-
-
-<script src="./script.js" type="module"></script>
+    <script src="./script.js" type="module"></script>
 </body>
+
 </html>
