@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadWorld = async () => {
     try {
       setStatus("Loading world...");
-      const data = await getJSON("/world");
+      const data = await getJSON("/world.json");
       renderWorld(data);
       setStatus("Loaded.");
     } catch (err) {
