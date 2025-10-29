@@ -1,59 +1,101 @@
-async function getJSON(url) {
-    const r = await fetch(url);
-    return r.json();
-}
-async function postJSON(url, body) {
-    const r = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+document.addEventListener("DOMContentLoaded", () => {
+  const findForm = document.getElementById("findForm");
+  const replaceForm = document.getElementById("replaceForm");
+  const worldBox = document.getElementById("worldBox");
+  const resultsBox = document.getElementById("resultsBox");
+  const statusEl = document.getElementById("status");
+
+  const setStatus = (msg, isError = false) => {
+    if (!statusEl) return;
+    statusEl.textContent = msg || "";
+    statusEl.style.color = isError ? "crimson" : "";
+  };
+
+  const formToObj = (form) => {
+    const obj = {};
+    new FormData(form).forEach((v, k) => (obj[k] = typeof v === "string" ? v.trim() : v));
+    return obj;
+  };
+
+  const getJSON = async (url) => {
+    const res = await fetch(url, { headers: { "Accept": "application/json" } });
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    return res.json();
+  };
+
+  const postJSON = async (url, bodyObj) => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(bodyObj || {}),
     });
-    return r.json();
-}
-function formToObj(form) {
-    const d = new FormData(form);
-    const o = {};
-    for (const [k, v] of d.entries()) o[k] = (v || "").toString().trim();
-    return o;
-}
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    const text = await res.text();
+    return text ? JSON.parse(text) : {};
+  };
 
-async function loadWorld() {
-    const data = await getJSON("/world.json");
-    const lines = [];
-    (data.regions || []).forEach((r, ri) => {
-        lines.push(`[${ri}] ${r.name} (${r.climate})`);
-        (r.towns || []).forEach((t, ti) => {
-            lines.push(`  [${ri}.${ti}] ${t.name}`);
-            (t.notable_people || []).forEach((p, pi) => {
-                lines.push(`    [${ri}.${ti}.${pi}] ${p.name} — ${p.role}`);
-            });
-        });
-    });
-    document.getElementById("worldDiv").textContent = lines.join("\n") || "(empty)";
-}
+  const renderWorld = (data) => {
+    if (!worldBox) return;
+    worldBox.textContent = JSON.stringify(data, null, 2);
+  };
 
-document.getElementById("refreshBtn").addEventListener("click", loadWorld);
-
-const findForm = document.getElementById("findForm");
-findForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const res = await postJSON("/find", body);
-    const lines = (res.results || []).map(x => `${x.path}`);
-    document.getElementById("resultsBox").textContent = lines.length ? lines.join("\n") : "(no matches)";
-});
-
-const replaceForm = document.getElementById("replaceForm");
-replaceForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const body = formToObj(replaceForm);
-    const res = await postJSON("/replace", body);
-    if (res.changed) {
-        document.getElementById("resultsBox").textContent =
-            `Changed first match at ${res.changed.town} -> ${res.changed.region}`;
-    } else {
-        document.getElementById("resultsBox").textContent = "(no change)";
+  const renderFindResults = (results) => {
+    if (!resultsBox) return;
+    if (!Array.isArray(results) || results.length === 0) {
+      resultsBox.textContent = "(no matches)";
+      return;
     }
-    await loadWorld();
-});
+    const lines = results.map((r) => (r.path ?? JSON.stringify(r)));
+    resultsBox.textContent = lines.join("\n");
+  };
 
-loadWorld();
+  const loadWorld = async () => {
+    try {
+      setStatus("Loading world...");
+      const data = await getJSON("/world");
+      renderWorld(data);
+      setStatus("Loaded.");
+    } catch (err) {
+      setStatus(`Failed to load world: ${err.message}`, true);
+      console.error(err);
+    }
+  };
+
+  if (findForm) {
+    findForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        setStatus("Searching...");
+        const body = formToObj(findForm);
+        const res = await postJSON("/find", body);
+        renderFindResults(res.results || []);
+        setStatus("Search complete.");
+      } catch (err) {
+        setStatus(`Find failed: ${err.message}`, true);
+        console.error(err);
+      }
+    });
+  }
+
+  if (replaceForm) {
+    replaceForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        setStatus("Applying replace...");
+        const body = formToObj(replaceForm);
+        const res = await postJSON("/replace", body);
+        if (typeof res.replacedCount === "number") {
+          setStatus(`Replaced ${res.replacedCount} occurrence(s).`);
+        } else {
+          setStatus("Replace complete.");
+        }
+        await loadWorld();
+      } catch (err) {
+        setStatus(`Replace failed: ${err.message}`, true);
+        console.error(err);
+      }
+    });
+  }
+
+  loadWorld();
+});
