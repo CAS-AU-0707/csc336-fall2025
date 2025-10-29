@@ -18,7 +18,7 @@ function formToObj(form) {
 }
 
 async function loadWorld() {
-    const data = await getJSON("/world");
+    const data = await getJSON("/world.json");
     const lines = [];
     (data.regions || []).forEach((r, ri) => {
         lines.push(`[${ri}] ${r.name} (${r.climate})`);
