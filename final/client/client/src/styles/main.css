@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+}
+
+.navbar {
+  background: #222;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.page {
+  padding: 20px;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.car-card {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.delete-btn {
+  background: #b30000;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.search-input {
+  padding: 8px;
+  width: 250px;
+  margin-bottom: 20px;
+}
+
+form input, form textarea, form button {
+  display: block;
+  width: 300px;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+form button {
+  background: #0066cc;
+  color: white;
+  border: none;
+}
