@@ -30,12 +30,30 @@ export default function CarList() {
 
   return (
     <div className="page list">
-      <h1>Your Cars</h1>
+      <div className="cars-hero">
+        <img
+          src="/truck-line.png"
+          alt="Line art truck"
+          className="cars-hero-image"
+        />
+        <img
+          src="/sports-car-1.png"
+          alt="Line art sports car"
+          className="cars-hero-image"
+        />
+        <img
+          src="/suv-line.png"
+          alt="Line art sports car"
+          className="cars-hero-image"
+        />
+      </div>
+
+      <h1 className="cars-title">Your Cars</h1>
+
       <SearchBar value={search} onChange={setSearch} />
 
       <div className="car-grid">
         {filtered.length === 0 && <p>No cars found.</p>}
-
         {filtered.map((car) => (
           <CarCard key={car.id} car={car} onDelete={deleteCar} />
         ))}

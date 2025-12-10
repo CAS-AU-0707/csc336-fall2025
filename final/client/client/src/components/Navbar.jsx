@@ -6,8 +6,8 @@ export default function Navbar() {
       <div className="navbar-brand">Car Collection</div>
       <div className="navbar-links">
         <Link to="/">Home</Link>
-        <Link to="/cars">    |  Cars</Link>
-        <Link to="/add"> | Add Car</Link>
+        <Link to="/cars">Cars</Link>
+        <Link to="/add">Add Car</Link>
       </div>
     </nav>
   );

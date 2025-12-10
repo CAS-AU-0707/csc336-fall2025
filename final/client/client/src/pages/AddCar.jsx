@@ -22,7 +22,6 @@ export default function AddCar() {
     e.preventDefault();
     setMessage("");
 
-    // Simple client-side validation
     if (!form.make || !form.model || !form.year) {
       setMessage("Make, model, and year are required.");
       return;
@@ -53,50 +52,69 @@ export default function AddCar() {
 
   return (
     <div className="page add">
-      <h1>Add a Car</h1>
+      <div className="add-hero">
+        <img
+          src="/sports-car-2.png"
+          alt="Sports car and SUV illustration"
+          className="add-hero-image"
+        />
+      </div>
+
+      <h1 className="add-title">Add a Car</h1>
+      <p className="add-intro">You can add cars to your car collection here.</p>
 
       {message && <p className="message">{message}</p>}
 
-      <form onSubmit={submit}>
-        <input
-          name="make"
-          placeholder="Make"
-          value={form.make}
-          onChange={updateField}
-          required
-        />
-        <input
-          name="model"
-          placeholder="Model"
-          value={form.model}
-          onChange={updateField}
-          required
-        />
-        <input
-          name="year"
-          placeholder="Year"
-          value={form.year}
-          onChange={updateField}
-          required
-        />
-        <input
-          name="transmission"
-          placeholder="Transmission"
-          value={form.transmission}
-          onChange={updateField}
-        />
-        <input
-          name="bodyStyle"
-          placeholder="Body Style"
-          value={form.bodyStyle}
-          onChange={updateField}
-        />
-        <textarea
-          name="notes"
-          placeholder="Notes"
-          value={form.notes}
-          onChange={updateField}
-        />
+      <form onSubmit={submit} className="add-form">
+        <div className="form-row">
+          <input
+            name="make"
+            placeholder="Make"
+            value={form.make}
+            onChange={updateField}
+            required
+          />
+          <input
+            name="model"
+            placeholder="Model"
+            value={form.model}
+            onChange={updateField}
+            required
+          />
+          <input
+            name="bodyStyle"
+            placeholder="Body style"
+            value={form.bodyStyle}
+            onChange={updateField}
+          />
+        </div>
+
+        <div className="form-row">
+          <input
+            name="year"
+            placeholder="Year"
+            value={form.year}
+            onChange={updateField}
+            required
+          />
+          <input
+            name="transmission"
+            placeholder="Transmission"
+            value={form.transmission}
+            onChange={updateField}
+          />
+        </div>
+
+        <div className="form-row form-row-notes">
+          <textarea
+            name="notes"
+            placeholder="Notes"
+            value={form.notes}
+            onChange={updateField}
+            className="notes-textarea"
+          />
+        </div>
+
         <button type="submit">Add Car</button>
       </form>
     </div>
